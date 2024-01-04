@@ -25,7 +25,13 @@ export async function getPost (req: Request, res: Response): Promise<Response>  
 }
 
 export async function updatePost(req: Request, res: Response) {
-
+    const id = req.params.postId;
+    const updatePost: Post = req.body;
+    const conn = await connect();
+    await conn.query(`UPDATE posts SET ? WHERE id = ?`, [updatePost, id])
+    return res.json({
+        message: "Post actualizado"
+    })
 }
 
 export async function deletePost(req: Request, res: Response) {
